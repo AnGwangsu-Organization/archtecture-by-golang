@@ -1,7 +1,6 @@
 package router
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,5 +18,7 @@ func NewMongoRouter(router *Router) {
 }
 
 func (m *MongoRouter) health(c *gin.Context) {
-	fmt.Println("들어옵니다.")
+	if !c.Writer.Written() {
+		c.JSON(200, "test")
+	}
 }

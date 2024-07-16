@@ -10,6 +10,11 @@ type Config struct {
 		Port string
 		Info string
 	}
+
+	Mongo struct {
+		Uri string
+		Db  string
+	}
 }
 
 func NewConfig(path string) *Config {

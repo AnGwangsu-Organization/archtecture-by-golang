@@ -2,7 +2,6 @@ package router
 
 import (
 	"eCommerce/config"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/net/context"
 	"net/http"
@@ -50,18 +49,13 @@ func requestTimeOutMiddleWare(timeout time.Duration) gin.HandlerFunc {
 			c.Next() // 다음 미들웨어 또는 핸들러로 제어를 넘긴다.
 		}()
 
-		fmt.Println("미들웨어")
-
 		// select 문을 사용하여 done 채널과 context의 완료 상태를 대기
 		select {
 		case <-done:
-
-			fmt.Println("실행 완료")
 			return // 요청 처리가 완료되면 미들웨어 종료
 		case <-ctx.Done():
 			// 타임아웃이 발생하면 요청을 중단하고 504 상태 코드를 반환
 			c.AbortWithStatusJSON(http.StatusGatewayTimeout, gin.H{"error": "Request Time Out"})
-
 		}
 	}
 }
